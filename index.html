@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="mainCanvas" width="500px" height="500px"></canvas>
+    <button id="stepButton" onclick="step()">Play</button>
+    <script>
+
+        var boids = []
+
+        function randint(min, max) {
+            return Math.floor(Math.random() * max) + min;
+        }
+
+        function isBetween(a,b,num){
+            var min = Math.min.apply(Math, [a, b])
+            var max = Math.max.apply(Math, [a, b]);
+            return num > min && num < max;
+        }
+
+        function arraydiff(array1, array2){
+            return array1.map(function (num, idx) {
+                return num - array2[idx];
+            });
+        }
+
+        var spawnrange = 100
+        var spawnnum = 500
+
+        for (let index = 0; index < spawnnum; index++) {
+            //boid : [ [pos] [speed] ]
+            var newboid = [[randint(-spawnrange, spawnrange+1), randint(-spawnrange, spawnrange+1)], [0, 0], 0]
+            boids.push(newboid)
+        }
+
+        function getboids(x,y,dx,dy){
+            var result = boids.filter(b => isBetween(x, x+dx, b[0][0]) && isBetween(y, y+dy, b[0][1]))
+            return result
+        }
+        
+        var sight_range = 10
+        var friction = 2
+
+        function step(){
+            boids.forEach(boid => {
+                //diminish the speed of the boid (friction)
+                boid[1][0] /= friction
+                boid[1][1] /= friction
+
+                //diminish hit marker value
+                boid[3] /= 2
+
+                //whatever boids do lol
+                var selfx = boid[0][0]
+                var selfy = boid[0][1]
+                var near = getboids(selfx-sight_range, selfy-sight_range, 2*sight_range, 2*sight_range)
+                var effect = [0,0]
+                near.forEach(nearboid => {
+                    var nearx = nearboid[0][0]
+                    var neary = nearboid[0][1]
+                    var diffVector = [selfx-nearx, selfy-neary]
+                    effect[0] += diffVector[0]
+                    effect[1] += diffVector[1]
+                });
+                
+                //update hit marker
+                if (effect[0]!=0 || effect[1]!=0){
+                    boid[3] = 1
+                }
+
+                //update the speed based on effect
+                boid[1][0] += effect[0]
+                boid[1][1] += effect[1]
+
+                //update the position
+                boid[0][0] += boid[1][0]
+                boid[0][1] += boid[1][1]
+            });
+            setTimeout(step, 30)
+        }
+
+        var canvas = document.getElementById("mainCanvas")
+        var ctx = canvas.getContext("2d");
+
+        var boid_display_size = 5
+
+        function draw() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            boids.forEach(boid => {
+                if (boid[3] > 0.5){
+                    ctx.fillStyle = "#f00"
+                } else{
+                    ctx.fillStyle = "#fff"
+                }
+                if( isBetween(-canvas.width/2, canvas.width/2, boid[0][0]) && isBetween(-canvas.height/2, canvas.height/2, boid[0][0])){
+                    ctx.fillRect(boid[0][0]+canvas.width/2 - boid_display_size/2, boid[0][1]+canvas.height/2 - boid_display_size/2, boid_display_size, boid_display_size);
+                }
+            });
+            window.requestAnimationFrame(draw);
+        }
+
+        window.requestAnimationFrame(draw);
+        draw()
+
+    </script>
+</body>
+</html>
