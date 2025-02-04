@@ -1,6 +1,5 @@
 - 👋 Hi, I’m @FuriousBird
-- 👀 Right now i'm working on OrangeApi and on a private project with the [Club Info de Hoche](https://github.com/cih-hoche).
-- 🌱 I’m currently learning Rust and Next js. 
+- 👀 Right now i'm working on a personal physics project.
 
 ### Languages and Tools:
 
