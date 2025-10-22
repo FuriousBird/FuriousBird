@@ -1,7 +1,15 @@
 - 👋 Hi, I’m @FuriousBird
-- 👀 Right now i'm working on a personal physics project.
+- Currently studying electronics at Phelma.
+- Fan of automation, i love tinkering with devices to see how they work, modify or repair them.
+
 
 ### Languages and Tools:
+
+I do programming as a hobby here is the stuff i might use (list not up to date)
+- intermediate skills on Rhino 3D
+- have used RDM NANTES
+- BLENDER for rendering/visual stuff
+- drawing softwre and stuff
 
 <img align="left" alt="Visual Studio Code" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/visual-studio-code/visual-studio-code.png" />
 <img align="left" alt="HTML5" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/html/html.png" />
